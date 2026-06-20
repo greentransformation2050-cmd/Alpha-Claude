@@ -55,6 +55,15 @@
 
 -----
 
+## DIAGNOSTIC ANSWERS (Recorded June 20, 2026)
+
+1. **Bottleneck:** Time/energy overload.
+2. **Experimental projects:** Framed as "side hustle," intended to be integrated into the daily planner at 1 hour/day. **Unresolved contradiction:** this adds fixed daily load on top of a self-diagnosed overload, with no corresponding cut named. When asked directly what gets cut to make room, the question was deflected twice — once with "yes/yes" (non-responsive), once by substituting a list of additive priorities for a subtractive decision. This deflection is itself diagnostic: it mirrors the same pattern as the unexecuted 2026–2029 roadmap intent to deprioritize experiments. **Resolution:** deferred to the Phase 1 time audit below — to be decided from data, not from a guess.
+3. **Fitness goal:** Real. Commitment rated 8–10. Target: 72kg → 65kg by ~Sept 18, 2026 (90 days), training cardio 4x/week. (Initial answer was "4 times a day," which was flagged as unsustainable from a zero baseline and corrected to 4x/week on follow-up — a live example of the planning-fallacy/optimism-bias pattern the frameworks predict.)
+4. **90-day win:** Personal/fitness milestone — defined by the target above.
+
+-----
+
 ## MENTORING APPROACH (Pending Answers)
 
 ### Phase 1: Diagnosis
@@ -83,20 +92,38 @@
 
 -----
 
-## BASELINE METRICS (To Be Established)
+## BASELINE METRICS
 
-- Weekly time allocation by category (institutional, projects, experimental, personal, admin)
-- Fitness baseline: weight, mobility, activity level
-- Clarity score: How clear are you on your top 3 priorities? (1–10)
-- Execution score: Gap between plan and action (quantify)
+- Fitness baseline: 72kg, zero baseline activity, target 65kg / 4x week cardio by ~Sept 18, 2026.
+- Weekly time allocation by category: **not yet established** — see Phase 1 audit below.
+- Clarity score / Execution score: not yet established — pending time audit results.
+
+-----
+
+## PHASE 1: ACTIVE — 2-WEEK TIME AUDIT (June 20 – July 4, 2026)
+
+**Purpose:** The "what gets cut for experiments" question could not be answered from memory (two attempts deflected). Per *Superforecasting* — don't estimate, measure. This audit replaces a guessed trade-off with an evidence-based one.
+
+**Log daily, by category:**
+- Institutional (GT2050 / GCF / FRLD / Santiago Network / Adaptation Fund)
+- Active Projects (SARITEM-2, GCF Readiness Guinea, AIP, Data for Transformation)
+- Experimental (ClimateTaskAI Lite, eBook, video)
+- Fitness
+- Admin/Other (flag if email/meetings/social media are consuming significant time)
+
+**Fitness execution test (runs concurrently, non-negotiable):**
+- 4x/week cardio, logged with date + duration + type.
+- This is the controlled test of stated-vs-actual execution, independent of the allocation question.
+
+**At day 14 (~July 4, 2026):** Return with actual logged data. The cut decision for the experimental-projects hour gets made from this evidence, not from a guess.
 
 -----
 
 ## NEXT STEP
 
-Alpha provides answers to the four diagnostic questions. Mentor then designs phase-specific plan with behavioral anchors and verification.
+Day-14 check-in: review time audit data + fitness log, name the actual cut (if any), proceed to Phase 2 (Priority Clarification).
 
 -----
 
-**Status:** AWAITING DIAGNOSTIC RESPONSE
+**Status:** PHASE 1 ACTIVE — TIME AUDIT IN PROGRESS (June 20 – July 4, 2026)
 **Last Updated:** June 20, 2026
