@@ -1,42 +1,82 @@
-# Installing Claude Code on Windows (winget)
+# Installing Claude Code
 
-[Claude Code](https://claude.com/claude-code) is Anthropic's CLI for agentic coding. On Windows, the
-recommended install path is via the Windows Package Manager (`winget`).
+[Claude Code](https://claude.com/claude-code) is Anthropic's CLI for agentic coding.
 
-## Prerequisites
+---
+
+## macOS / Linux
+
+### Prerequisites
+
+- macOS 12+ or a modern Linux distribution
+- Node.js 18+
+- `curl` (preinstalled on macOS and most Linux distros)
+
+### Install
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+### Verify
+
+```bash
+claude --version
+```
+
+### Update
+
+Re-run the install command — the script upgrades an existing installation automatically.
+
+### Uninstall
+
+```bash
+npm uninstall -g @anthropic-ai/claude-code
+```
+
+---
+
+## Windows (winget)
+
+### Prerequisites
 
 - Windows 10 1809+ or Windows 11
 - [App Installer](https://apps.microsoft.com/detail/9nblggh4nns1) installed (ships `winget`; preinstalled on most modern Windows builds)
-- Node.js 18+ (Claude Code runs on Node)
+- Node.js 18+
 
-## Install
+### Install
 
 ```powershell
 winget install Anthropic.ClaudeCode
 ```
 
-## Verify
+### Verify
 
 ```powershell
 claude --version
 ```
 
-## Update
+### Update
 
 ```powershell
 winget upgrade Anthropic.ClaudeCode
 ```
 
-## Uninstall
+### Uninstall
 
 ```powershell
 winget uninstall Anthropic.ClaudeCode
 ```
 
-## Other platforms
+---
 
-- **macOS/Linux:** `curl -fsSL https://claude.ai/install.sh | bash`
-- **npm (cross-platform):** `npm install -g @anthropic-ai/claude-code`
+## Cross-platform (npm)
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+---
 
 ## First run
 
