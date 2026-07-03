@@ -3,6 +3,14 @@
 **Constraints honored:** No deception, no fake claims, no copyrighted footage reuse, no manipulative dark patterns. Growth built on ethical mass psychology (curiosity, identity, contrast, proof, surprise, status, FOMO, transformation, challenge, conflict, community, payoff).
 **Date:** July 3, 2026
 
+> **Companion deep-dive files** (in `strategy/`), each expanding one part of this doc into a production-ready asset:
+> - `strategy/01-full-video-scripts.md` — complete scripts for all 30 launch videos (this doc only fully scripts 8)
+> - `strategy/02-field-guide-product.md` — the full manuscript for the $19 Day-1 digital product (30 concepts, ready to lay out as a PDF)
+> - `strategy/03-sponsor-affiliate-targets.md` — real, verified affiliate/sponsor programs (Skillshare, Notion, Audible, MasterClass, BetterHelp, Brilliant.org) with actual commission rates and application links
+> - `strategy/04-financial-model.md` — month-by-month revenue projection from launch to $100k/month, with leading indicators to track
+> - `strategy/05-production-templates.md` + `strategy/templates/*.csv` — fill-in-the-blank script template, daily/weekly checklists, and importable idea/retention trackers (idea tracker pre-loaded with all 30 videos and real sources)
+> - `strategy/06-30-day-launch-calendar.md` — the Day 1–7 calendar below, extended through a full first month
+>
 > **Honesty check before anything else:** A brand-new channel has **zero organic reach on Day 1** — YouTube/TikTok/IG algorithms need signal (watch time, engagement) before they distribute anything, and that takes days to weeks even for great content. "$1,000 on Day 1" is only realistic if it comes from a **pre-sold offer pushed through channels you already have** (personal network, email/WhatsApp list, a warm DM list, or a paid-traffic assist) — not from the new channel's own organic video views. Section 6 is built around that reality, not around wishful thinking. Everything from Section 7 onward is the actual organic/compounding path to $100k/month.
 
 ---
