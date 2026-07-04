@@ -103,18 +103,20 @@ assembly package documented in-repo.
 
 ## 7. Next Actions (prioritized)
 
-1. **Source the music bed** — *Objective:* fill the missing sonic layer. *Approach:* hand §4
-   brief to an external music-gen tool or library; instrumental only, ~3:10, restrained
-   dynamics. *Output:* one bed or three crossfaded stems. *Dependency:* external tool/account.
-2. **Decide footage strategy** — *Objective:* resolve the 2:00-vs-3:05 gap. *Approach:* accept
-   slow-mo (free) or top up ~300 cr and generate ~8–9 clips in the house style. *Output:* a go
-   decision. *Dependency:* credit top-up if choosing more footage.
-3. **Assemble in CapCut** — *Objective:* produce the finished film. *Approach:* follow §5
-   walk-through exactly (720p/24fps canvas, EDL clip order, VO spine, gap-fill, audio ducking,
-   music, titles, export). *Output:* one 720p MP4 with voice. *Dependency:* assets downloaded
-   + music sourced.
+1. **Assemble in CapCut (PRIMARY — where voice appears)** — *Objective:* one finished 720p MP4
+   with narration. *Approach:* download all 20 clips + 7 VO tracks from Higgsfield Library;
+   follow `VIDEO-export-bauxite-720p.md` §5 (720p/24fps canvas → clips in EDL order → 7 VO
+   tracks on the timeline → duck ambient under voice → titles → export). *Output:* the film,
+   ~3:05, voiced. *Dependency:* runs on the user's machine (cannot mux in-session). ~30–40 min.
+2. **Source a music bed** (parallel, optional for v1) — *Approach:* §4 brief → Suno/Udio or a
+   licensed library; instrumental, ~3:10, restrained. *Dependency:* external; film works without.
+3. **(Optional) Top up credits** — only if further Higgsfield generation is wanted (music
+   preview, re-rolls). Balance ~38 cr. NOT needed to finish the current cut.
 4. **(Optional) Confirm virality numbers** — read the two widget dashboards; if they contradict
    the hook > refinery read, re-plan the lead frame.
+
+**Note:** footage gap is RESOLVED (Tier A done, 20 clips). A ~36 cr "voiced preview" was offered
+and declined-by-interrupt — skip it; real voice appears for free at step 1.
 
 ## 8. Important Context to Preserve
 
