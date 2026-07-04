@@ -107,7 +107,31 @@ a licensed library (Artlist/Epidemic/Musicbed), or a composer. This brief hands 
 
 ---
 
-## 5. Open items
+## 5. Assembly walk-through (CapCut — free)
+
+Higgsfield has **no timeline/assembly editor** (it only generates), and the mux cannot run
+inside the Claude session (media CDN egress-blocked, no ffmpeg). Assemble in an external NLE.
+CapCut (desktop/mobile, free) is the most accessible; DaVinci Resolve is the pro-free option.
+
+0. **Download assets** from the Higgsfield Library: all 14 clips + 7 Sterling VO `.wav`s
+   (keep job IDs in filenames to match this doc).
+1. **New project:** canvas 16:9, **1280×720**, **24 fps**.
+2. **Video spine** (order = EDL §2): C1 hook → C2 map → C3 cross-section → C4 aerial →
+   C5 excavator → C6 workers → C7 port → C8 refinery → C9 transformation → C10 red-mud →
+   C11 montage → C12 aircraft → C13 village → C14 ingot.
+3. **Narration:** on audio track 1, drop V1→V7 back-to-back from 0:00 (~3:05 total). This is
+   the sync spine — everything aligns to it. (This is the fix for "no voice.")
+4. **Fill the footage gap** (~2:00 footage vs 3:05 VO): per clip, Speed → ~0.6–0.75× or
+   freeze last frame, so each clip block sits under its assigned VO segment (EDL timecodes).
+5. **Audio balance:** VO ~ -16 LUFS; duck each clip's ambient to ~ -18 dB under the voice.
+6. **Music bed** (once sourced per §4): audio track 2 at ~ -24 dB, three-movement arc.
+7. **Titles:** clips are text-free by design — add title card, source-stat lower-third,
+   closing question over C14.
+8. **Export:** 720p, 24 fps, H.264, ~8–10 Mbps → finished narrated film, one file.
+
+---
+
+## 6. Open items
 
 - **Music bed** — not generated (Seed Audio here does speech only; use an external
   music source or a music-capable model).
