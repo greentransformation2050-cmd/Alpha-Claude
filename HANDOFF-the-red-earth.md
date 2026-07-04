@@ -24,8 +24,8 @@
   written, committed, and pushed (see `VIDEO-export-bauxite-720p.md`).
 
 **In progress / unfinished:**
-- **Footage/VO gap decision — AWAITING USER CHOICE (immediate blocker).** 4 options on the
-  table (see §6). Recommendation: Option 2 (partial fill, ~6 clips, ~216 cr, no top-up).
+- **Footage/VO gap — RESOLVED.** Tier A batch generated (6 clips, 216 cr). Now **20 clips
+  ≈ 160s** vs 185s VO → residual slow-mo only ~1.0–1.35× (near-native). Balance ~38 cr.
 - **Assembly of the film** — not started (external step; cannot run in-session).
 - **Music bed** — not generated; brief exists, source not chosen.
 

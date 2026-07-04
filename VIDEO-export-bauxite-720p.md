@@ -29,6 +29,19 @@ egress policy inside the Claude session, so the mux cannot run here).
 | C13 | `7331705b` | West African village at dusk, distant mine glow |
 | C14 | `21b97590` | Closing: silver ingot on red laterite earth |
 
+### Video clips — Tier A gap-fill batch (added; 8s each, 720p)
+| # | Job ID | Shot | Slots into |
+|---|--------|------|-----------|
+| N1 | `71705506` | West Africa from orbit at dawn | V1 opening |
+| N2 | `79a9fd16` | Miner's hands turning raw bauxite ore (no face) | V3 extraction |
+| N3 | `a5f8232b` | Molten aluminum pour (macro) | V4 refining |
+| N4 | `d7316bb6` | Laden cargo ship crossing open sea | V3/V5 |
+| N5 | `90f02a94` | Aluminum-and-glass skyline at dawn | V5 payoff |
+| N6 | `05841861` | Child silhouette in lamp-lit doorway | V6 human cost |
+
+Total footage now **20 clips ≈ 160s** vs 185s VO → residual slow-mo only ~1.15× (barely
+perceptible), down from ~1.55×.
+
 Superseded takes (do not use): `98f85f3b` (map v1), `80b56ece` (village v1),
 `7e1796de` (aerial v1), `ee7a3c42` (soda-can v1).
 
@@ -48,19 +61,19 @@ Superseded takes (do not use): `98f85f3b` (map v1), `80b56ece` (village v1),
 
 ## 2. Edit Decision List (VO-driven timeline)
 
-Narration is the spine; footage is cut/held/slowed to fit each segment. Footage total
-(~120s over the assigned clips) is < VO total (185s), so shots are slowed ~1.3–1.6×
-(Seedance moves are slow and hold well) — no additional generation required.
+Narration is the spine; footage is cut/held/slowed to fit each segment. With the Tier A
+batch, footage is now ~160s over 20 clips vs 185s VO, so residual slow-mo is only ~1.0–1.35×
+(near-native) — no further generation required.
 
 | Timecode | VO | Clips (in order) | Raw | Fit note |
 |----------|----|--------------------|-----|----------|
-| 0:00–0:41 | V1 | C1 hook → C2 world map | 16s | Punch-cut the hook at 0:08; hold/slow the map push-in to fill |
-| 0:41–1:05 | V2 | C3 cross-section → C4 aerial | 16s | Slow ~1.4× |
-| 1:05–1:34 | V3 | C5 excavator → C6 workers → C7 port | 24s | Slow ~1.2× |
-| 1:34–2:04 | V4 | C8 refinery → C9 transformation → C10 red-mud | 24s | Slow ~1.25×; land "red waste" on C10 |
-| 2:04–2:27 | V5 | C11 aluminum montage → C12 aircraft | 16s | Slow ~1.4× |
-| 2:27–2:54 | V6 | C13 village → C6 worker-scale (reuse) | 16s | Hold village on "in the dark"; slow to fill |
-| 2:54–3:05 | V7 | C14 closing ingot | 8s | Slow reverent push-in to fill 10.8s |
+| 0:00–0:41 | V1 | C1 hook → N1 orbit → C2 world map | 24s | Lead on the hook; slow ~1.3× |
+| 0:41–1:05 | V2 | C3 cross-section → C4 aerial | 16s | Slow ~1.45× (only tight segment) |
+| 1:05–1:34 | V3 | N2 hands → C5 excavator → C7 port → N4 ship | 32s | ~1.0×; land "leaves the port" on N4 ship |
+| 1:34–2:04 | V4 | C8 refinery → C9 transformation → N3 molten pour → C10 red-mud | 32s | ~1.0×; "red waste" on C10 |
+| 2:04–2:27 | V5 | C11 montage → C12 aircraft → N5 skyline | 24s | ~1.0×; end on the skyline |
+| 2:27–2:54 | V6 | C13 village → N6 child → C6 worker-scale | 24s | ~1.1×; hold on "in the dark" |
+| 2:54–3:05 | V7 | C14 closing ingot | 8s | Slow ~1.35× reverent push-in |
 
 ---
 
@@ -135,9 +148,8 @@ CapCut (desktop/mobile, free) is the most accessible; DaVinci Resolve is the pro
 
 - **Music bed** — not generated (Seed Audio here does speech only; use an external
   music source or a music-capable model).
-- **Footage shortfall** — 3:05 VO vs ~2:00 raw footage is covered by slowing/holding.
-  If smoother motion is preferred over slow-mo, ~8–9 more 8s clips (~290–320 cr) would
-  fill it 1:1 — but that exceeds the current ~270-credit balance, so a top-up would be
-  needed first.
+- **Footage shortfall** — RESOLVED via Tier A batch (6 clips). Footage now ~160s over 20
+  clips vs 185s VO; residual slow-mo ~1.0–1.35× (near-native). Only V2 (0:41–1:05) still
+  runs ~1.45×; one more clip there would make it fully native but is not required.
 - **Assembly** — must happen in Higgsfield's editor or a local NLE; cannot mux inside
   the Claude session (media CDN blocked by egress policy, no ffmpeg).
