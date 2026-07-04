@@ -24,9 +24,10 @@
   written, committed, and pushed (see `VIDEO-export-bauxite-720p.md`).
 
 **In progress / unfinished:**
+- **Footage/VO gap decision — AWAITING USER CHOICE (immediate blocker).** 4 options on the
+  table (see §6). Recommendation: Option 2 (partial fill, ~6 clips, ~216 cr, no top-up).
 - **Assembly of the film** — not started (external step; cannot run in-session).
 - **Music bed** — not generated; brief exists, source not chosen.
-- **Footage/VO length reconciliation** — decision pending (slow-mo vs. more footage).
 
 **Milestones hit:** asset generation complete; "no voice" problem solved at source; full
 assembly package documented in-repo.
@@ -80,9 +81,14 @@ assembly package documented in-repo.
 
 ## 6. Open Issues
 
-- **[Decision needed] Footage < voice:** ~2:00 of footage vs 3:05 of VO (confirmed). Options:
-  slow/hold clips (free, default) **or** generate ~8–9 more clips (~300 cr — **exceeds ~270
-  balance, needs top-up**).
+- **[Decision needed — IMMEDIATE] Footage < voice:** ~2:00 of footage vs 3:05 of VO
+  (confirmed). Four options presented, awaiting the user's pick:
+  1. **Slow-mo, spend nothing** (0 cr, EDL default; some shots may feel sluggish).
+  2. **Partial fill** — ~6 more 720p clips (~216 cr, no top-up, leaves ~55 cr; halves the
+     slow-mo). **← recommended.** Candidate shots: miners' hands on ore, conveyor detail,
+     smelter pour close-up, second aerial, cargo ship at sea, child in village at dusk.
+  3. **Full native** — top up, then ~9 clips (~324 cr; zero slow-mo; needs top-up over ~270).
+  4. **Hold** — leave at slow-mo default, revisit later.
 - **[Blocker → external] Music bed:** none generated. Higgsfield Seed Audio does speech only;
   `sonilo_music` is walled to the game pipeline. **Must come from an external source**
   (Suno/Udio-style, licensed library, or composer).
