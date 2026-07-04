@@ -72,8 +72,35 @@ winget uninstall Anthropic.ClaudeCode
 
 ## Cross-platform (npm)
 
+Use this method on any OS where Node.js is already installed — including Windows, macOS, and Linux.
+
+### Prerequisites
+
+- Node.js 18+
+- npm 7+ (included with Node.js)
+
+### Install
+
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
+
+### Verify
+
+```bash
+claude --version
+```
+
+### Update
+
+```bash
+npm update -g @anthropic-ai/claude-code
+```
+
+### Uninstall
+
+```bash
+npm uninstall -g @anthropic-ai/claude-code
 ```
 
 ---
