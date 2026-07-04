@@ -80,7 +80,34 @@ Narration is the spine; footage is cut/held/slowed to fit each segment. Footage 
 
 ---
 
-## 4. Open items
+## 4. Music-bed direction
+
+The music is a **bed, not a score**: ~ -24 dB under narration, swelling only in the gaps
+between VO segments, ducking back the instant Sterling speaks. Documentary underscore,
+not trailer music.
+
+**Emotional arc (mapped to the EDL):**
+
+| Section | Timecode | Mood | Instrumentation |
+|---------|----------|------|-----------------|
+| I. The Hook & the Trap | 0:00–1:05 (V1–V2) | Curious, ominous | Sparse: low sustained drone (cello/synth pad), lone kalimba or ngoni figure (West African texture), distant sub-bass pulse. Space and silence. |
+| II. The Mechanism | 1:05–2:27 (V3–V5) | Building weight, industrial inevitability | Add slow mechanical percussion pulse (heartbeat/machine), low brass swells under "the value multiplies," rising tension under the red-mud beat. Momentum, not drama. |
+| III. Cost & Resolve | 2:27–3:05 (V6–V7) | Melancholic → quietly hopeful | Strip back to opening drone + ngoni; resolve harmony upward on "a curse is not a sentence." End on a single held warm note under the closing question. Last ~2s: no music, ambient only. |
+
+**Specs:**
+- Tempo ~60–70 BPM; minor/modal, one tonal center, lift to relative major in III.
+- One continuous ~3:10 instrumental bed (trim room), or three ~60–80s crossfaded stems.
+- Recurring West African string/kalimba motif bookends hook → close.
+- Deliver **instrumental only**, dynamically restrained (low peak-to-average) for a clean
+  sidechain duck under narration.
+
+**Sourcing:** Higgsfield Seed Audio does speech only; `sonilo_music` is walled to the game
+pipeline. Bed must come from an **external source** — a music-gen tool (Suno/Udio-style),
+a licensed library (Artlist/Epidemic/Musicbed), or a composer. This brief hands off as-is.
+
+---
+
+## 5. Open items
 
 - **Music bed** — not generated (Seed Audio here does speech only; use an external
   music source or a music-capable model).
