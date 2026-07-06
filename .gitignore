@@ -1,0 +1,6 @@
+# Transient working copies pulled from Drive/other sources during a session.
+# Never commit confidential funding files, media binaries, or scratch artifacts.
+scratch/
+*.xlsx
+*.docx
+*.pdf
