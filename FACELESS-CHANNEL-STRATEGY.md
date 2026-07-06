@@ -10,6 +10,7 @@
 > - `strategy/04-financial-model.md` — month-by-month revenue projection from launch to $100k/month, with leading indicators to track
 > - `strategy/05-production-templates.md` + `strategy/templates/*.csv` — fill-in-the-blank script template, daily/weekly checklists, and importable idea/retention trackers (idea tracker pre-loaded with all 30 videos and real sources)
 > - `strategy/06-30-day-launch-calendar.md` — the Day 1–7 calendar below, extended through a full first month
+> - `strategy/07-backup-channel-glitch-in-nature.md` — full build-out of the backup channel concept (#3 below), including real sponsor programs (CuriosityStream, KiwiCo, Nebula) and the launch-trigger checklist for when to start it (~Month 9–12, as a second revenue engine, not a Day-1 distraction)
 >
 > **Honesty check before anything else:** A brand-new channel has **zero organic reach on Day 1** — YouTube/TikTok/IG algorithms need signal (watch time, engagement) before they distribute anything, and that takes days to weeks even for great content. "$1,000 on Day 1" is only realistic if it comes from a **pre-sold offer pushed through channels you already have** (personal network, email/WhatsApp list, a warm DM list, or a paid-traffic assist) — not from the new channel's own organic video views. Section 6 is built around that reality, not around wishful thinking. Everything from Section 7 onward is the actual organic/compounding path to $100k/month.
 
