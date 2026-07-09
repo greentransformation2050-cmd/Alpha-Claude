@@ -95,8 +95,9 @@
 ## BASELINE METRICS
 
 - Fitness baseline: 72kg, zero baseline activity, target 65kg / 4x week cardio by ~Sept 18, 2026.
-- Weekly time allocation by category: **not yet established** — see Phase 1 audit below.
-- Clarity score / Execution score: not yet established — pending time audit results.
+- Weekly time allocation by category: **ESTABLISHED (July 4, 2026)** — ~47% travel, ~47% climate mandate calls, ~5% AI upskilling; **0% fitness, 0% experimental, ~0% deep-work.** Full breakdown in `PHASE1-TIME-AUDIT-2026-07-04.md`.
+- Clarity score: **HIGH** — mandate work is coherent and consistently executed; clarity is not the bottleneck.
+- Execution score (self-directed goals): **~0 / LOW** — the true bottleneck is a structural execution gap on anything without an external deadline, not raw time overload (capacity existed in the final 3 weeks; self-directed goals still scored zero).
 
 -----
 
@@ -119,11 +120,31 @@
 
 -----
 
+## PHASE 1 RESULT (Day-14 Check-In — July 4, 2026)
+
+Full findings: **`PHASE1-TIME-AUDIT-2026-07-04.md`**. Reconstructed from objective data (Calendar + sent email, May 4 – July 4) since daily logs were not kept — the non-logging is itself consistent with the execution-gap hypothesis.
+
+- **Fitness execution test: FAILED — 0 of 8 expected sessions.** Stated commitment 8–10; executed 0. Notably, the freest weeks (last 3 of the window) still produced zero — isolating the constraint away from time and toward structure.
+- **Actual allocation vs. stated priorities:** everything externally imposed (institutional + SARITEM-2/FRLD + travel) was executed; **both self-directed priorities — fitness AND experimental projects — scored a hard zero.** SARITEM-2/FRLD alone = 62.5% of outbound email.
+- **The "what gets cut" question (deflected twice on June 20) — resolved from data:** experiments were never actually running (0 footprint), so there is no live trade-off to fund. Decision: **formally defer all experimental projects** (parked with a Phase 2 review date, closing the roadmap-intent gap); **redirect the intended experimental hour to fitness** (the stated 90-day win); **fence it against the real predator — SARITEM-2/travel scope creep**, not experiments.
+- **Bottleneck re-diagnosed:** from "time/energy overload" → **structural execution gap on non-deadline-driven goals.** Redirects Phase 3 from "find more time" to "manufacture external-grade accountability for internal goals."
+
+## PHASE 2 (Priority Clarification) — OPEN (July 4, 2026)
+
+Full analysis: **`PHASE2-PRIORITY-CLARIFICATION.md`**. Confidence-calibration complete (outside view). Central finding: the stated 13-commitment portfolio is ~6× wider than the ~2 commitments actually executed over 60 days.
+
+**The law identified:** every commitment with an external counterparty survived; every self-authored one (GT2050 presidency, all 3 experiments, fitness) died — for the *same* structural reason (no external enforcement), not different ones. This is the thesis for Phase 3: manufacture external-grade accountability for internal goals, not motivation.
+
+**Awaiting three decisions (inside view required):**
+- **A** — Are GCF Readiness / AIP / Data for Transformation actually live, or nominal/delegated? (rec: only SARITEM-2 live)
+- **B** — Accept bottleneck re-diagnosis (structure, not time)? (rec: accept)
+- **C** — Experimental projects: defer all three? (rec: defer to named review date)
+
 ## NEXT STEP
 
-Day-14 check-in: review time audit data + fitness log, name the actual cut (if any), proceed to Phase 2 (Priority Clarification).
+Alpha answers Decisions A/B/C → finalize pruned commitment list → **Phase 3 (Execution Design):** accountability architecture for the fenced cardio block (direct test of the "external enforcement" law).
 
 -----
 
-**Status:** PHASE 1 ACTIVE — TIME AUDIT IN PROGRESS (June 20 – July 4, 2026)
-**Last Updated:** June 20, 2026
+**Status:** PHASE 2 OPEN — calibration done; awaiting Decisions A, B, C. (Phase 1 complete: fitness test FAILED 0/8; bottleneck re-diagnosed as execution gap.)
+**Last Updated:** July 4, 2026
