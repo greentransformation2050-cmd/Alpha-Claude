@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAP Conakry — Salle des opérations</title>
+  <meta name="description" content="Tableau de bord opérationnel du système d'alerte précoce inondations de Conakry : risque par commune, points sensibles, prévisions, alertes et signalements.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🌊 SAP Conakry <span class="tag">Prototype</span></div>
+    <nav aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a class="active" href="dashboard.html" aria-current="page">Tableau de bord</a>
+      <a href="alerts.html">Alertes</a>
+      <a href="reports.html">Signalements</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div id="demo-banner" class="demo-banner" hidden>
+      ⚠️ <strong>Mode démonstration</strong> — l'API météo est injoignable ; les données affichées sont simulées.
+    </div>
+
+    <section id="alert-hero" class="card hero" aria-live="polite"></section>
+
+    <section id="tiles" class="tiles"></section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Carte du risque — communes et points sensibles</h2>
+        <div id="map"></div>
+        <div id="map-legend" class="map-legend"></div>
+        <p class="sub" style="margin-top:8px">📍 Points sensibles : <strong>données simulées</strong> (positions et causes indicatives), à valider avec l'ANGUCH et les communes avant usage opérationnel.</p>
+      </div>
+      <div class="card">
+        <h2>Situation par commune</h2>
+        <p class="sub">Score 0–100 : pluie prévue (24 h), pluie tombée (48 h), saturation des sols, débit de rivière quand il est exploitable, pondérés par l'exposition locale. « Décision » permet à l'autorité de forcer un niveau.</p>
+        <table id="zone-table">
+          <thead>
+            <tr>
+              <th>Commune</th>
+              <th class="num">Pluie 24 h</th>
+              <th class="num">Pluie 48 h</th>
+              <th class="num">Score</th>
+              <th>Niveau</th>
+              <th>Confiance</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="chart-head">
+        <h2>Précipitations</h2>
+        <select id="commune-select" aria-label="Commune affichée dans les graphiques"></select>
+      </div>
+      <div class="charts-2">
+        <figure>
+          <figcaption>Cumul quotidien de pluie (mm) — 2 jours observés + 7 jours de prévision</figcaption>
+          <div id="chart-daily"></div>
+        </figure>
+        <figure>
+          <figcaption>Pluie horaire (mm) — dernières 12 h et prochaines 48 h</figcaption>
+          <div id="chart-hourly"></div>
+        </figure>
+      </div>
+      <details class="data-table">
+        <summary>Voir les données du graphique quotidien</summary>
+        <table id="daily-table">
+          <thead><tr><th>Jour</th><th class="num">Pluie (mm)</th><th class="num">Prob. max (%)</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </details>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Alertes actives</h2>
+        <p class="sub">Alertes publiées. <a href="alerts.html">Rédiger et approuver les alertes →</a></p>
+        <div id="active-alerts"></div>
+      </div>
+      <div class="card">
+        <h2>Derniers signalements</h2>
+        <p class="sub">Remontées citoyennes à vérifier. <a href="reports.html">Valider les signalements →</a></p>
+        <ul id="reports" class="feed"></ul>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span id="updated-at"></span>
+      <span class="sep">·</span>
+      <button id="refresh" class="ghost">Actualiser</button>
+      <span class="sep">·</span>
+      <span>Données : <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a> (prévisions + débit GloFAS) · Fond de carte : OpenStreetMap</span>
+      <span class="sep">·</span>
+      <span>Prototype d'aide à la décision — ne remplace pas les alertes officielles.</span>
+    </footer>
+  </main>
+
+  <!-- Dialogue « décision officielle » (override du niveau calculé) -->
+  <dialog id="override-dialog">
+    <h3>Décision officielle — <span id="ov-zone-name"></span></h3>
+    <p class="sub">Force le niveau affiché pour cette commune, quel que soit le score du modèle. À utiliser sur instruction de l'autorité compétente.</p>
+    <form id="override-form" method="dialog">
+      <label for="ov-level">Niveau</label>
+      <select id="ov-level">
+        <option value="">— Suivre le modèle (retirer la décision) —</option>
+      </select>
+      <label for="ov-reason">Motif</label>
+      <input id="ov-reason" placeholder="ex. instruction ANGUCH, digue fragilisée…">
+      <div class="btn-row">
+        <button class="primary" value="save">Enregistrer</button>
+        <button class="ghost" value="cancel" formnovalidate>Annuler</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="assets/js/core/config.js"></script>
+  <script src="assets/js/core/adapters.js"></script>
+  <script src="assets/js/core/risk.js"></script>
+  <script src="assets/js/core/alerts.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/charts.js"></script>
+  <script src="assets/js/page-dashboard.js"></script>
+</body>
+</html>

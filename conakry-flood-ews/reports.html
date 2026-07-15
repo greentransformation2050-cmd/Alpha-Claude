@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAP Conakry — Validation des signalements</title>
+  <meta name="description" content="Réception et validation des signalements d'inondation envoyés par les habitants de Conakry.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🌊 SAP Conakry <span class="tag">Prototype</span></div>
+    <nav aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="dashboard.html">Tableau de bord</a>
+      <a href="alerts.html">Alertes</a>
+      <a class="active" href="reports.html" aria-current="page">Signalements</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="chart-head">
+        <h2>Signalements citoyens</h2>
+        <select id="filter" aria-label="Filtrer par état">
+          <option value="tous">Tous les états</option>
+          <option value="en_attente">À vérifier</option>
+          <option value="valide">Validés</option>
+          <option value="rejete">Rejetés</option>
+        </select>
+      </div>
+      <p class="sub">Chaque signalement envoyé depuis l'<a href="index.html">application publique</a> arrive ici pour vérification. Un signalement validé confirme la situation sur le terrain et renforce la confiance dans le niveau d'alerte.</p>
+      <div id="report-list"></div>
+    </section>
+
+    <footer class="foot">
+      <span>Prototype : signalements stockés localement sur cet appareil (voir README pour l'architecture de production).</span>
+    </footer>
+  </main>
+
+  <script src="assets/js/core/config.js"></script>
+  <script src="assets/js/core/adapters.js"></script>
+  <script src="assets/js/core/risk.js"></script>
+  <script src="assets/js/core/alerts.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/page-reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAP Conakry — Rédaction et approbation des alertes</title>
+  <meta name="description" content="Rédaction, approbation et publication des alertes inondation de Conakry (brouillon → approuvée → publiée, diffusion simulée).">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🌊 SAP Conakry <span class="tag">Prototype</span></div>
+    <nav aria-label="Navigation principale">
+      <a href="index.html">Accueil</a>
+      <a href="dashboard.html">Tableau de bord</a>
+      <a class="active" href="alerts.html" aria-current="page">Alertes</a>
+      <a href="reports.html">Signalements</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div id="demo-banner" class="demo-banner" hidden>
+      ⚠️ <strong>Mode démonstration</strong> — l'API météo est injoignable ; les données affichées sont simulées.
+    </div>
+
+    <section class="card">
+      <h2>Nouvelle alerte</h2>
+      <p class="sub">Circuit : <strong>brouillon → approuvée → publiée</strong>. La publication est <strong>simulée</strong> dans ce prototype : aucun SMS/WhatsApp réel n'est envoyé (voir README pour brancher une passerelle).</p>
+      <form id="draft-form">
+        <div class="form-row">
+          <div>
+            <label for="draft-level">Niveau</label>
+            <select id="draft-level"></select>
+          </div>
+          <div>
+            <label>Canaux de diffusion</label>
+            <div class="checks" id="draft-channels">
+              <label><input type="checkbox" value="inapp" checked> Application</label>
+              <label><input type="checkbox" value="sms" checked> SMS</label>
+              <label><input type="checkbox" value="whatsapp"> WhatsApp</label>
+            </div>
+          </div>
+        </div>
+        <label>Communes concernées</label>
+        <div class="checks" id="draft-zones"></div>
+        <div class="btn-row">
+          <button type="button" id="gen-messages" class="ghost">Générer les messages</button>
+        </div>
+        <div id="draft-preview" hidden>
+          <label for="msg-inapp">Message application</label>
+          <textarea id="msg-inapp" rows="3" spellcheck="false"></textarea>
+          <label for="msg-sms">Message SMS (sans accents, viser ≤ 160 caractères par segment) — <span id="sms-count"></span></label>
+          <textarea id="msg-sms" rows="3" spellcheck="false"></textarea>
+          <label for="msg-whatsapp">Message WhatsApp</label>
+          <textarea id="msg-whatsapp" rows="6" spellcheck="false"></textarea>
+          <div class="btn-row">
+            <button type="submit" class="primary">Enregistrer le brouillon</button>
+          </div>
+        </div>
+        <p class="form-msg" id="draft-msg" role="status"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Alertes</h2>
+      <div id="alert-list"></div>
+    </section>
+
+    <footer class="foot">
+      <span id="updated-at"></span>
+      <span class="sep">·</span>
+      <span>Prototype d'aide à la décision — la décision d'alerter appartient aux autorités (ANGUCH, Météorologie nationale).</span>
+    </footer>
+  </main>
+
+  <script src="assets/js/core/config.js"></script>
+  <script src="assets/js/core/adapters.js"></script>
+  <script src="assets/js/core/risk.js"></script>
+  <script src="assets/js/core/alerts.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/page-alerts.js"></script>
+</body>
+</html>
