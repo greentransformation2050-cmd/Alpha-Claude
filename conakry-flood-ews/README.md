@@ -33,9 +33,37 @@ npm test               # unit + adapter tests (node --test)
 npm run test:ui        # Playwright UI flow tests (skipped if Playwright absent)
 ```
 
+## Data sources — integrated, ready-to-plug, and planned
+
+The system is honest about what it consumes: `SAP.SOURCES`
+(`core/config.js`) is the registry of all ten recommended sources with their
+integration status, rendered on the dashboard ("Sources de données"). v1
+runs live on Open-Meteo only; everything else is either plumbed and waiting
+for access, or scheduled as calibration input.
+
+| # | Source | Status in this app | How it plugs in |
+|---|---|---|---|
+| 1 | **FANFAR** (West-African flood forecasting, SMHI/HYPE) | **Ready to plug** | Register at fanfar.eu, set `CONFIG.feeds.fanfarUrl`; feeds the discharge factor as a Conakry-relevant replacement/complement to GloFAS |
+| 2 | **ANM Guinée** official alerts (CAP) | **Ready to plug** | CAP 1.x parser (`SAP.parseCap`) + feed poller (`SAP.adapters.officialAlerts`) are implemented and tested; set `CONFIG.feeds.capFeeds` when ANM grants a feed — official alerts then appear on the dashboard |
+| 3 | **VOLTALARM** + open models (HYPE, wflow_sbm, LISFLOOD-FP) | Reference | Methodological model for building 1–10-day custom forecasts in a later modeling phase |
+| 4 | **NASA GPM IMERG** satellite rainfall | Planned (backend) | Requires an Earthdata account and server-side processing; **bias correction (quantile mapping) against ANM ground data is mandatory** before it feeds the risk model |
+| 5 | **UKCEH Nowcasting** (0–6 h storms, West Africa) | Access to request | Contact nowcasting-portal@ceh.ac.uk; would power a short-fuse warning tier |
+| 6 | **Conakry GIS flood-susceptibility study** | Calibration | Replaces the simulated hotspots and the prototype `exposure`/`drainage` multipliers with validated priority zones (elevation, drainage density, soils) |
+| 7 | **JICA historical water levels** | Calibration | Anchors "normal" vs "dangerous" levels; calibrates `next24Norm` / `dischargeRatioNorm` |
+| 8 | **DNH / UNDP-GEF 64 telemetered hydro stations** | Access to request | Contact the Direction Nationale de l'Hydraulique; live river levels would become a first-class risk factor |
+| 9 | **INS Guinée flood statistics** | Calibration | Past impact by neighborhood → prioritize zones and validate alert thresholds |
+| 10 | **Open-Meteo Forecast + Flood (GloFAS)** | **Integrated (v1)** | The current live engine, described below |
+
+Two structural consequences of this plan are already built in: the
+**adapter seam** (every source lands as one more adapter behind
+`SAP.loadData()` / `officialAlerts()`), and the **official-override
+workflow** (until ANM's CAP feed is plugged, an ANM instruction received by
+phone/bulletin is entered as a *décision officielle*, which outranks the
+model).
+
 ## Data architecture
 
-Three adapters behind one loader (`assets/js/core/adapters.js`):
+Adapters behind one loader (`assets/js/core/adapters.js`):
 
 - **Weather adapter** — [Open-Meteo Forecast API](https://open-meteo.com/):
   hourly precipitation, precipitation probability, topsoil moisture + daily
@@ -47,6 +75,10 @@ Three adapters behind one loader (`assets/js/core/adapters.js`):
   the model runs without the discharge factor (confidence is lowered).
 - **Sample adapter** — deterministic simulated rainy-season data so the app
   works offline or during API failures, always flagged **Mode démonstration**.
+- **CAP adapter** — `SAP.parseCap()` parses Common Alerting Protocol
+  documents (prefers the French `<info>` block) and
+  `SAP.adapters.officialAlerts()` polls the feeds in `CONFIG.feeds.capFeeds`
+  (empty by default). This is the landing point for ANM's official warnings.
 
 `SAP.loadData()` orchestrates: live weather is required (full fallback to
 sample data otherwise); river discharge is best-effort.

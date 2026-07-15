@@ -237,6 +237,41 @@
       : '<li class="empty">Aucun signalement pour le moment.</li>';
   }
 
+  /* ---------- Sources de données + alertes officielles (CAP) ---------- */
+
+  function renderSources() {
+    const chipClass = { integre: 'chip-valide', pret_a_brancher: 'chip-approuvee', acces_a_demander: 'chip-en_attente', calibration: 'chip-brouillon', reference: 'chip-brouillon' };
+    $('#sources-table tbody').innerHTML = SAP.SOURCES.map(s =>
+      '<tr>' +
+        '<td><strong>' + esc(s.name) + '</strong></td>' +
+        '<td>' + esc(s.role) + '</td>' +
+        '<td><span class="chip ' + (chipClass[s.status] || '') + '">' + esc(SAP.SOURCE_STATUS_LABELS[s.status] || s.status) + '</span></td>' +
+        '<td>' + esc(s.action) + '</td>' +
+      '</tr>'
+    ).join('');
+  }
+
+  async function renderOfficialAlerts() {
+    const el = $('#official-alerts');
+    const feeds = (SAP.CONFIG.feeds && SAP.CONFIG.feeds.capFeeds) || [];
+    if (!feeds.length) {
+      el.innerHTML = '<p class="sub">Aucun flux CAP officiel configuré (le parseur est prêt : renseignez <code>CONFIG.feeds.capFeeds</code> quand l\'ANM fournit l\'accès).</p>';
+      return;
+    }
+    const alerts = await SAP.adapters.officialAlerts();
+    el.innerHTML = alerts.length
+      ? alerts.slice(0, 5).map(a =>
+          '<div class="alert-item"><div class="head"><span class="chip chip-publiee">Alerte officielle</span>' +
+          '<span class="title">' + esc(a.info.headline || a.info.event || 'Alerte') + '</span>' +
+          (a.info.severity ? '<span class="chip">' + esc(a.info.severity) + '</span>' : '') + '</div>' +
+          (a.info.description ? '<div>' + esc(a.info.description) + '</div>' : '') +
+          (a.info.instruction ? '<div><strong>Consigne :</strong> ' + esc(a.info.instruction) + '</div>' : '') +
+          '<div class="when">' + esc(a.sender || '') + (a.sent ? ' · ' + esc(a.sent) : '') +
+          (a.info.areas.length ? ' · Zones : ' + esc(a.info.areas.join(', ')) : '') + '</div></div>'
+        ).join('')
+      : '<p class="sub">Flux CAP configuré, aucune alerte officielle active (ou flux injoignable).</p>';
+  }
+
   /* ---------- Cycle de vie ---------- */
 
   async function refresh() {
@@ -250,6 +285,8 @@
     renderCharts(state);
     renderActiveAlerts();
     renderReports();
+    renderSources();
+    renderOfficialAlerts();
     SAP.ui.setUpdatedAt(state);
   }
 

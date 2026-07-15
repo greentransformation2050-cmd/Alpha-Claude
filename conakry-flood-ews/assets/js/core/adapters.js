@@ -144,6 +144,77 @@ var SAP = (typeof window !== 'undefined')
     },
   };
 
+  /* ---------- CAP (Common Alerting Protocol) ----------
+     Parseur minimal, sans dépendance, pour les flux d'alertes officiels
+     (ex. ANM Guinée). Fonctionne navigateur + Node (testé). */
+
+  function tag(block, name) {
+    const m = block.match(new RegExp('<' + name + '(?:\\s[^>]*)?>([\\s\\S]*?)</' + name + '>'));
+    return m ? m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim() : null;
+  }
+
+  function tags(block, name) {
+    const out = [];
+    const re = new RegExp('<' + name + '(?:\\s[^>]*)?>([\\s\\S]*?)</' + name + '>', 'g');
+    let m;
+    while ((m = re.exec(block))) out.push(m[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim());
+    return out;
+  }
+
+  /* Analyse un document CAP 1.x et renvoie une alerte normalisée :
+     { identifier, sender, sent, status, infos: [{ language, event, severity,
+       urgency, certainty, headline, description, instruction, onset,
+       expires, areas[] }] }. Préfère le bloc <info> francophone s'il existe. */
+  SAP.parseCap = function (xml) {
+    if (!xml || xml.indexOf('<alert') === -1) return null;
+    const alert = {
+      identifier: tag(xml, 'identifier'),
+      sender: tag(xml, 'sender'),
+      sent: tag(xml, 'sent'),
+      status: tag(xml, 'status'),
+      infos: tags(xml, 'info').map(info => ({
+        language: tag(info, 'language') || 'fr',
+        event: tag(info, 'event'),
+        severity: tag(info, 'severity'),
+        urgency: tag(info, 'urgency'),
+        certainty: tag(info, 'certainty'),
+        headline: tag(info, 'headline'),
+        description: tag(info, 'description'),
+        instruction: tag(info, 'instruction'),
+        onset: tag(info, 'onset'),
+        expires: tag(info, 'expires'),
+        areas: tags(info, 'area').map(a => tag(a, 'areaDesc')).filter(Boolean),
+      })),
+    };
+    if (!alert.infos.length) return null;
+    alert.info = alert.infos.find(i => (i.language || '').slice(0, 2).toLowerCase() === 'fr') || alert.infos[0];
+    return alert;
+  };
+
+  /* Récupère les alertes officielles des flux CAP configurés
+     (CONFIG.feeds.capFeeds). Renvoie [] si aucun flux n'est configuré ou
+     si les flux sont injoignables — le système continue sans. */
+  SAP.adapters.officialAlerts = async function () {
+    const feeds = (SAP.CONFIG.feeds && SAP.CONFIG.feeds.capFeeds) || [];
+    const results = [];
+    for (const url of feeds) {
+      try {
+        const res = await fetch(url, fetchOpts());
+        if (!res.ok) throw new Error('CAP HTTP ' + res.status);
+        const xml = await res.text();
+        // Un flux peut contenir plusieurs <alert> (ATOM/RSS ou concaténation).
+        const blocks = xml.match(/<alert[\s\S]*?<\/alert>/g) || [];
+        for (const block of blocks) {
+          const parsed = SAP.parseCap(block);
+          if (parsed && parsed.status !== 'Test') results.push(parsed);
+        }
+      } catch (err) {
+        if (typeof console !== 'undefined') console.warn('SAP: flux CAP injoignable :', url, err && err.message);
+      }
+    }
+    return results;
+  };
+
   /* Charge météo (obligatoire) + débit (optionnel).
      source: 'live' | 'sample'. flood peut être null en mode live. */
   SAP.loadData = async function () {

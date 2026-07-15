@@ -18,6 +18,17 @@ SAP.CONFIG = {
     floodPastDays: 31,   // référence de débit pour détecter une anomalie
     floodForecastDays: 7,
   },
+  /* Flux supplémentaires à brancher quand l'accès est obtenu (voir
+     SAP.SOURCES et README § Data sources). Vides par défaut. */
+  feeds: {
+    /* URLs de flux CAP (Common Alerting Protocol) officiels — ex. alertes de
+       l'ANM (Agence Nationale de la Météorologie). Dès qu'une URL est
+       renseignée, les alertes officielles apparaissent sur le tableau de bord. */
+    capFeeds: [],
+    /* Point d'accès FANFAR (prévision hydrologique ouest-africaine, projet
+       SMHI/HYPE) — nécessite un compte : https://fanfar.eu */
+    fanfarUrl: '',
+  },
   /* Modèle de risque — VALEURS DE PROTOTYPE, configurables, à faire valider
      par la Météorologie nationale, l'hydrologie, la protection civile et les
      communes avant tout usage opérationnel (voir README § Assumptions).
@@ -127,6 +138,72 @@ SAP.HOTSPOTS = [
   { id: 'coleah', zone: 'matam', name: 'Coléah', lat: 9.525, lon: -13.668, cause: 'Drainage vétuste, forte densité', simulated: true },
   { id: 'boulbinet', zone: 'kaloum', name: 'Boulbinet', lat: 9.507, lon: -13.717, cause: 'Submersion côtière, port artisanal', simulated: true },
 ];
+
+/* Registre des sources de données du système : ce qui est intégré, ce qui
+   est prêt à brancher, ce qui demande un accord formel, et ce qui sert à la
+   calibration. Affiché sur le tableau de bord pour rester honnête sur ce que
+   le système utilise réellement.
+   status : integre | pret_a_brancher | acces_a_demander | calibration | reference */
+SAP.SOURCES = [
+  {
+    id: 'open-meteo', name: 'Open-Meteo Forecast + Flood (GloFAS)', status: 'integre',
+    role: 'Pluie horaire/quotidienne, humidité du sol, débit de rivière — moteur v1',
+    action: 'Actif : adaptateurs weather/flood, repli simulé en cas de panne.',
+  },
+  {
+    id: 'fanfar', name: 'FANFAR — prévision hydrologique ouest-africaine (SMHI/HYPE)', status: 'pret_a_brancher',
+    role: 'Prévisions et alertes de crue régionales, conçues pour l’Afrique de l’Ouest',
+    action: 'Créer un compte sur fanfar.eu puis renseigner CONFIG.feeds.fanfarUrl.',
+  },
+  {
+    id: 'anm', name: 'ANM Guinée — alertes officielles (CAP)', status: 'pret_a_brancher',
+    role: 'Vigilances météo nationales : la référence officielle pour déclencher',
+    action: 'Demander le flux CAP à l’ANM puis renseigner CONFIG.feeds.capFeeds ; le parseur CAP est déjà intégré.',
+  },
+  {
+    id: 'imerg', name: 'NASA GPM IMERG — pluie satellite temps quasi réel', status: 'acces_a_demander',
+    role: 'Estimation de pluie observée là où il n’y a pas de pluviomètres',
+    action: 'Compte Earthdata + traitement backend ; correction de biais (quantile mapping) avec les relevés ANM.',
+  },
+  {
+    id: 'ukceh', name: 'UKCEH Nowcasting — orages à 0–6 h', status: 'acces_a_demander',
+    role: 'Prévision immédiate des orages violents en Afrique de l’Ouest',
+    action: 'Contacter nowcasting-portal@ceh.ac.uk pour l’accès au flux.',
+  },
+  {
+    id: 'dnh', name: 'DNH / PNUD-FEM — 64 stations hydrologiques télémesurées', status: 'acces_a_demander',
+    role: 'Niveaux d’eau en direct sur les cours d’eau guinéens',
+    action: 'Contacter la Direction Nationale de l’Hydraulique pour l’accès au réseau réhabilité.',
+  },
+  {
+    id: 'susceptibilite', name: 'Carte SIG de susceptibilité aux inondations de Conakry', status: 'calibration',
+    role: 'Altitude, densité de drainage, sols → zones prioritaires validées',
+    action: 'Remplacer les multiplicateurs exposure/drainage et les points sensibles simulés par cette couche.',
+  },
+  {
+    id: 'jica', name: 'JICA — niveaux d’eau historiques', status: 'calibration',
+    role: 'Niveaux « normaux » et « dangereux » observés par point de mesure',
+    action: 'Caler les seuils du modèle (next24Norm, dischargeRatioNorm) sur ces références.',
+  },
+  {
+    id: 'ins', name: 'Statistiques nationales des inondations (INS Guinée)', status: 'calibration',
+    role: 'Quartiers touchés et dégâts passés → priorisation des zones',
+    action: 'Pondérer l’exposition des communes et prioriser les quartiers d’alerte.',
+  },
+  {
+    id: 'voltalarm', name: 'VOLTALARM / modèles ouverts (HYPE, wflow_sbm, LISFLOOD-FP)', status: 'reference',
+    role: 'Méthodes opérationnelles éprouvées dans la sous-région (bassin de la Volta)',
+    action: 'Référence méthodologique pour des prévisions propres à 1–10 jours (phase modélisation).',
+  },
+];
+
+SAP.SOURCE_STATUS_LABELS = {
+  integre: 'Intégré',
+  pret_a_brancher: 'Prêt à brancher',
+  acces_a_demander: 'Accès à demander',
+  calibration: 'Calibration',
+  reference: 'Référence',
+};
 
 /* Gabarits de messages d'alerte (français).
    Le SMS est volontairement sans accents (alphabet GSM-7, segments de 160
