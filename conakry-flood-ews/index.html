@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAP Conakry — Risque d'inondation dans ma commune</title>
+  <meta name="description" content="Système d'alerte précoce inondations de Conakry — vue publique : niveau de risque de votre commune, consignes de sécurité, alertes en cours, signalement d'inondation.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🌊 SAP Conakry <span class="tag">Prototype</span></div>
+    <nav aria-label="Navigation principale">
+      <a class="active" href="index.html" aria-current="page">Accueil</a>
+      <a href="dashboard.html">Tableau de bord</a>
+      <a href="alerts.html">Alertes</a>
+      <a href="reports.html">Signalements</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div id="demo-banner" class="demo-banner" hidden>
+      ⚠️ <strong>Mode démonstration</strong> — l'API météo est injoignable ; les données affichées sont simulées.
+    </div>
+
+    <!-- Alertes officielles publiées visant ma commune -->
+    <section id="public-alerts" aria-live="polite"></section>
+
+    <section class="card">
+      <h2><label for="my-commune" style="margin:0;font-size:inherit;color:inherit">Ma commune</label></h2>
+      <select id="my-commune"></select>
+    </section>
+
+    <!-- Niveau de risque de ma commune -->
+    <section id="alert-hero" class="card hero" aria-live="polite"></section>
+
+    <section class="card">
+      <h2>Que faire maintenant ?</h2>
+      <div id="guidance" class="guidance"></div>
+    </section>
+
+    <section class="card">
+      <h2>Pluie attendue — 3 prochains jours</h2>
+      <div id="day-chips" class="day-chips"></div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h2>Recevoir les alertes</h2>
+        <p class="sub">Soyez prévenu par SMS ou WhatsApp quand le niveau de votre commune change. <em>(Prototype : l'inscription est enregistrée sur cet appareil ; aucun message réel n'est envoyé — voir README.)</em></p>
+        <form id="subscribe-form">
+          <div class="form-row">
+            <div>
+              <label for="sub-name">Nom</label>
+              <input id="sub-name" name="name" required autocomplete="name">
+            </div>
+            <div>
+              <label for="sub-phone">Téléphone (ex. 6XX XX XX XX)</label>
+              <input id="sub-phone" name="phone" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{8,16}">
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="sub-commune">Commune</label>
+              <select id="sub-commune" name="commune"></select>
+            </div>
+            <div>
+              <label for="sub-channel">Canal</label>
+              <select id="sub-channel" name="channel">
+                <option value="sms">SMS</option>
+                <option value="whatsapp">WhatsApp</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-row"><button class="primary" type="submit">S'inscrire aux alertes</button></div>
+          <p class="form-msg" id="sub-msg" role="status"></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Signaler une inondation</h2>
+        <p class="sub">Votre signalement est transmis à la salle des opérations et aide à confirmer les alertes sur le terrain.</p>
+        <form id="report-form">
+          <div class="form-row">
+            <div>
+              <label for="rep-commune">Commune</label>
+              <select id="rep-commune" name="commune"></select>
+            </div>
+            <div>
+              <label for="rep-quartier">Quartier</label>
+              <input id="rep-quartier" name="quartier" placeholder="ex. Lambanyi, Gbessia…">
+            </div>
+          </div>
+          <label for="rep-severity">Gravité</label>
+          <select id="rep-severity" name="severity">
+            <option value="montante">Eau montante (chevilles)</option>
+            <option value="moderee">Inondation modérée (genoux)</option>
+            <option value="grave">Inondation grave (habitations touchées)</option>
+          </select>
+          <label for="rep-details">Description (facultatif)</label>
+          <textarea id="rep-details" name="details" rows="3" placeholder="Routes coupées, maisons inondées, personnes à évacuer…"></textarea>
+          <div class="form-row">
+            <div>
+              <label for="rep-contact">Votre téléphone (facultatif)</label>
+              <input id="rep-contact" name="contact" inputmode="tel" placeholder="pour être rappelé si besoin">
+            </div>
+            <div>
+              <label for="rep-photo">Photo (bientôt disponible)</label>
+              <input id="rep-photo" type="file" disabled title="L'envoi de photos sera ajouté dans une prochaine version">
+            </div>
+          </div>
+          <div class="btn-row"><button class="primary" type="submit">Envoyer le signalement</button></div>
+          <p class="form-msg" id="rep-msg" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Historique des alertes</h2>
+      <ul id="alert-history" class="feed"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Consignes générales et numéros utiles</h2>
+      <div class="grid-2">
+        <div>
+          <h3>Avant la saison des pluies</h3>
+          <ul class="checklist">
+            <li>Dégagez caniveaux et rigoles autour de votre habitation.</li>
+            <li>Repérez le point haut le plus proche et le chemin pour y aller.</li>
+            <li>Gardez papiers, argent et médicaments dans un sac étanche.</li>
+            <li>Enregistrez les numéros d'urgence dans votre téléphone.</li>
+          </ul>
+          <h3>Après l'inondation</h3>
+          <ul class="checklist">
+            <li>Ne consommez pas l'eau des puits avant contrôle : risque de choléra.</li>
+            <li>Faites bouillir ou traiter l'eau de boisson.</li>
+            <li>Signalez les dégâts et les personnes vulnérables aux autorités.</li>
+            <li>Méfiez-vous des bâtiments fragilisés et des câbles tombés.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Numéros utiles</h3>
+          <div class="contact-grid">
+            <div class="contact"><div class="num">18</div><div class="who">Sapeurs-pompiers (protection civile)</div></div>
+            <div class="contact"><div class="num">117</div><div class="who">Police secours</div></div>
+            <div class="contact"><div class="num">ANGUCH</div><div class="who">Agence nationale de gestion des urgences et catastrophes humanitaires</div></div>
+            <div class="contact"><div class="num">Croix-Rouge</div><div class="who">Croix-Rouge guinéenne — antenne de votre commune</div></div>
+          </div>
+          <p class="sub" style="margin-top:8px">Vérifiez ces numéros auprès de votre mairie : ils peuvent évoluer.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span id="updated-at"></span>
+      <span class="sep">·</span>
+      <span>Données météo : <a href="https://open-meteo.com/" rel="noopener">Open-Meteo</a></span>
+      <span class="sep">·</span>
+      <span>Prototype d'aide à la décision — ne remplace pas les alertes officielles (ANGUCH, Météorologie nationale).</span>
+    </footer>
+  </main>
+
+  <script src="assets/js/core/config.js"></script>
+  <script src="assets/js/core/adapters.js"></script>
+  <script src="assets/js/core/risk.js"></script>
+  <script src="assets/js/core/alerts.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/page-public.js"></script>
+</body>
+</html>
