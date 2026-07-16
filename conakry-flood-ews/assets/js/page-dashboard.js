@@ -102,15 +102,17 @@
 
   function renderMapFallback(a, el) {
     const box = { lonMin: -13.75, lonMax: -13.55, latMin: 9.47, latMax: 9.68 };
-    el.outerHTML = '<div id="map" class="map-fallback">' + a.zones.map(function (z) {
+    // Les épingles (points sensibles) d'abord, les communes ensuite :
+    // les badges de commune restent lisibles au-dessus des épingles.
+    el.outerHTML = '<div id="map" class="map-fallback">' + SAP.HOTSPOTS.map(function (h) {
+      const x = (h.lon - box.lonMin) / (box.lonMax - box.lonMin) * 100;
+      const y = (box.latMax - h.lat) / (box.latMax - box.latMin) * 100;
+      return '<div class="pin hotspot" style="left:' + x + '%;top:' + y + '%" title="' + esc(h.name) + ' — ' + esc(h.cause) + ' (simulé)">📍</div>';
+    }).join('') + a.zones.map(function (z) {
       const x = (z.centroid.lon - box.lonMin) / (box.lonMax - box.lonMin) * 100;
       const y = (box.latMax - z.centroid.lat) / (box.latMax - box.latMin) * 100;
       return '<div class="pin lvl-' + z.level.id + '" style="left:' + x + '%;top:' + y + '%">' +
         '<span class="badge">' + esc(z.name) + ' · ' + z.score + '</span></div>';
-    }).join('') + SAP.HOTSPOTS.map(function (h) {
-      const x = (h.lon - box.lonMin) / (box.lonMax - box.lonMin) * 100;
-      const y = (box.latMax - h.lat) / (box.latMax - box.latMin) * 100;
-      return '<div class="pin" style="left:' + x + '%;top:' + y + '%" title="' + esc(h.name) + ' — ' + esc(h.cause) + ' (simulé)">📍</div>';
     }).join('') + '</div>';
   }
 

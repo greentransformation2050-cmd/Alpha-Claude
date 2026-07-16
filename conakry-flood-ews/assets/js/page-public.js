@@ -76,12 +76,14 @@
   }
 
   function renderHistory() {
-    const alerts = SAP.store.getAlerts().filter(a => a.status !== 'brouillon' && a.status !== 'annulee').slice(0, 10);
+    // Côté public, seules les alertes PUBLIÉES existent — jamais les
+    // brouillons ni les alertes seulement approuvées.
+    const alerts = SAP.store.getPublishedAlerts().slice(0, 10);
     $('#alert-history').innerHTML = alerts.length
       ? alerts.map(function (a) {
           const level = SAP.levelById(a.level) || SAP.LEVELS[0];
           return '<li>' + SAP.ui.levelBadge(level) + ' <span class="where">' + esc(a.title) + '</span>' +
-            '<br><span class="when">' + SAP.formatDateTime(a.publishedAt || a.createdAt) + '</span></li>';
+            '<br><span class="when">' + SAP.formatDateTime(a.publishedAt) + '</span></li>';
         }).join('')
       : '<li class="empty">Aucune alerte publiée pour le moment.</li>';
   }

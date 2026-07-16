@@ -106,6 +106,25 @@ test('parcours d’interface complet', { skip: !chromium && 'Playwright non inst
     assert.match(await page.textContent('#public-alerts'), /Orange/i);
   });
 
+  await t.test('une alerte non publiée ne fuit jamais côté public', async () => {
+    // Brouillon jaune, approuvé mais PAS publié.
+    await page.goto(base + '/alerts.html');
+    await page.waitForSelector('#draft-form');
+    await page.selectOption('#draft-level', 'jaune');
+    await page.click('#gen-messages');
+    await page.click('#draft-form button[type=submit]');
+    await page.waitForSelector('.alert-item .act[data-to="approuvee"]');
+    await page.click('.alert-item .act[data-to="approuvee"]');
+    await page.waitForSelector('.alert-item .act[data-to="publiee"]');
+
+    await page.goto(base + '/index.html');
+    await page.waitForSelector('#alert-history li');
+    const history = await page.textContent('#alert-history');
+    assert.match(history, /Orange/i, "l'alerte publiée reste dans l'historique");
+    assert.ok(!/Jaune/i.test(history), "l'alerte seulement approuvée ne doit pas apparaître dans l'historique public");
+    assert.ok(!/Jaune/i.test(await page.textContent('#public-alerts')), 'ni dans le bandeau public');
+  });
+
   await t.test('signalement : envoi public puis validation en salle des opérations', async () => {
     await page.goto(base + '/index.html');
     await page.waitForSelector('#report-form');
