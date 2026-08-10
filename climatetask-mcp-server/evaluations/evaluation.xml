@@ -1,0 +1,49 @@
+<evaluation>
+  <!--
+    Read-only evaluation set for climatetask-mcp-server.
+    Answers rely on stable API metadata (names, codes, timezones, arithmetic on
+    date ranges) rather than measurements that drift over time.
+    NOTE: authored in an offline build environment — run each question once
+    against the live server to confirm answers before using in CI.
+  -->
+  <qa_pair>
+    <question>Use the geocoding tool to look up "Conakry". What IANA timezone does the top result report?</question>
+    <answer>Africa/Conakry</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Geocode the location "Boke" and report the country of the top result.</question>
+    <answer>Guinea</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Geocode "Dakar" and report the two-letter country code of the top result.</question>
+    <answer>SN</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Fetch historical climate data for Conakry (geocode it first) from 2020-08-01 to 2020-08-05. How many daily entries are returned?</question>
+    <answer>5</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Request the World Bank indicator SP.POP.TOTL for country code "GN". What ISO3 country code appears in the response?</question>
+    <answer>GIN</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Request the World Bank indicator SP.POP.TOTL for Guinea. What is the official indicator name returned by the API?</question>
+    <answer>Population, total</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Request the World Bank indicator AG.LND.FRST.ZS for Senegal (SEN). What is the official indicator name returned?</question>
+    <answer>Forest area (% of land area)</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Request World Bank indicator NY.GDP.MKTP.CD for Guinea restricted to start_year=2010 and end_year=2014. How many yearly points are returned?</question>
+    <answer>5</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Fetch historical climate data for latitude 9.54, longitude -13.68 for the single day 2015-01-01. How many daily entries are returned?</question>
+    <answer>1</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Geocode "Bissau" and report the country of the top result.</question>
+    <answer>Guinea-Bissau</answer>
+  </qa_pair>
+</evaluation>
