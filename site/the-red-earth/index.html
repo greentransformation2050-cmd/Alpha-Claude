@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The Red Earth: a three-minute documentary on the resource curse, told through West African bauxite and the aluminum it becomes.">
+<title>The Red Earth</title>
+<style>
+  :root {
+    --screen: #101317;
+    --panel: #171b21;
+    --ink: #eae7e1;
+    --dim: #a7adb8;
+    --faint: #6d7480;
+    --ember: #d96a3b;
+    --ember-deep: #9c4322;
+    --earth-fill: #66290f;
+    --line: rgba(234, 231, 225, 0.14);
+    --display: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    --body: Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    background: var(--screen);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--ember-deep); color: var(--ink); }
+
+  a { color: var(--ember); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--ember);
+    outline-offset: 3px;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+  .hero::after {
+    /* vignette so the title always sits on a readable ground */
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, rgba(10, 12, 15, 0.92) 0%, rgba(10, 12, 15, 0.35) 45%, rgba(10, 12, 15, 0.15) 100%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    width: 100%;
+    padding: 96px 0 72px;
+  }
+  .hero .label { color: var(--ink); opacity: 0.85; }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(56px, 11vw, 152px);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    margin: 18px 0 22px;
+    text-wrap: balance;
+  }
+  .hero h1 .earth-word { color: var(--ember); }
+
+  .hero p {
+    max-width: 46ch;
+    font-size: clamp(17px, 1.6vw, 20px);
+    color: var(--ink);
+    margin-bottom: 34px;
+  }
+
+  .cta {
+    display: inline-block;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: #1a120c;
+    background: var(--ember);
+    padding: 15px 30px;
+    white-space: nowrap;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .cta:hover { background: #e2794c; }
+  .cta:active { transform: translateY(1px); }
+
+  /* ---------- Sections ---------- */
+
+  section { padding: 120px 0; }
+  @media (max-width: 767px) { section { padding: 80px 0; } }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* Thesis */
+
+  .thesis { border-top: 1px solid var(--line); }
+  .thesis blockquote {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 44px);
+    line-height: 1.35;
+    max-width: 24ch;
+    text-wrap: balance;
+    padding-bottom: 6px;
+  }
+  .thesis blockquote .q-mark { color: var(--ember); font-style: normal; }
+  .thesis figcaption {
+    margin-top: 22px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--dim);
+  }
+  .thesis .thesis-body {
+    max-width: 62ch;
+    margin-top: 56px;
+    color: var(--dim);
+  }
+  .thesis .thesis-body strong { color: var(--ink); font-weight: 700; }
+  @media (min-width: 900px) {
+    .thesis .wrap { padding-left: 14vw; }
+  }
+
+  /* Value ladder */
+
+  .ladder { border-top: 1px solid var(--line); }
+  .ladder h2, .film h2, .notes h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(30px, 4.4vw, 52px);
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    text-wrap: balance;
+    margin-bottom: 16px;
+  }
+  .ladder .ladder-sub { color: var(--dim); max-width: 58ch; margin-bottom: 64px; }
+
+  .ladder-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr;
+    gap: 40px;
+    align-items: end;
+  }
+  .rung .label { margin-bottom: 10px; display: block; }
+  .rung .price {
+    font-family: var(--display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .rung:nth-child(1) .price { font-size: clamp(34px, 4.5vw, 58px); color: var(--dim); }
+  .rung:nth-child(2) .price { font-size: clamp(44px, 6vw, 82px); color: var(--ink); }
+  .rung:nth-child(3) .price { font-size: clamp(58px, 8.5vw, 124px); color: var(--ember); }
+  .rung .per { font-family: var(--mono); font-size: 13px; color: var(--faint); margin-top: 10px; }
+  .ladder-note {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .ladder-note .takeaway { font-size: 19px; max-width: 44ch; }
+  .ladder-note .takeaway em { color: var(--ember); font-style: normal; font-weight: 700; }
+  .ladder-note .fineprint { font-family: var(--mono); font-size: 12px; color: var(--faint); max-width: 34ch; }
+  @media (max-width: 767px) {
+    .ladder-row { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  }
+
+  /* Film strip */
+
+  .film { border-top: 1px solid var(--line); }
+  .film .film-sub { color: var(--dim); max-width: 58ch; margin-bottom: 56px; }
+
+  .strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(360px, 82vw);
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 18px;
+    scrollbar-color: var(--ember-deep) transparent;
+  }
+  .strip::-webkit-scrollbar { height: 6px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--ember-deep); }
+  .strip::-webkit-scrollbar-track { background: rgba(234, 231, 225, 0.06); }
+
+  .shot {
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
+    padding: 26px 26px 30px;
+    border: 1px solid var(--line);
+    background: var(--shot-bg, var(--panel));
+  }
+  /* card ground ramps from red earth to aluminum slate across the seven movements */
+  .shot:nth-child(1) { --shot-bg: #2c150c; }
+  .shot:nth-child(2) { --shot-bg: #29160e; }
+  .shot:nth-child(3) { --shot-bg: #241711; }
+  .shot:nth-child(4) { --shot-bg: #1f1814; }
+  .shot:nth-child(5) { --shot-bg: #1b1a18; }
+  .shot:nth-child(6) { --shot-bg: #171a1d; }
+  .shot:nth-child(7) { --shot-bg: #141a21; }
+
+  .shot .tc {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ember);
+    margin-bottom: auto;
+  }
+  .shot h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin: 48px 0 10px;
+  }
+  .shot .desc { font-size: 15px; color: var(--dim); margin-bottom: 20px; }
+  .shot .vo {
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  /* Production notes */
+
+  .notes { border-top: 1px solid var(--line); }
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 48px;
+    margin-top: 56px;
+  }
+  .note-group .label { display: block; margin-bottom: 20px; color: var(--ember); }
+  .note-group dl { display: grid; gap: 14px; }
+  .note-group dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+  .note-group dd { font-size: 16px; color: var(--ink); margin-bottom: 6px; }
+  @media (max-width: 900px) {
+    .notes-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* Footer */
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 56px 0 64px;
+  }
+  .credits {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .credits .prod {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .credits .disclosure {
+    font-size: 14px;
+    color: var(--dim);
+    max-width: 52ch;
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <canvas id="strata" aria-hidden="true"></canvas>
+  <!-- TODO: replace canvas with real film still, C1 soda-can hook frame or C4 mine aerial, 1920x1080 -->
+  <div class="wrap hero-inner">
+    <span class="label">A GT2050 documentary · in post-production</span>
+    <h1>The Red <span class="earth-word">Earth</span></h1>
+    <p>Three minutes on the resource curse: how West African bauxite leaves as cheap ore and returns as expensive metal.</p>
+    <a class="cta" href="#film">See how it unfolds</a>
+  </div>
+</header>
+
+<section class="thesis reveal">
+  <div class="wrap">
+    <figure>
+      <blockquote>
+        <span class="q-mark">&ldquo;</span>The red earth will always be worth more as metal than as dirt.<span class="q-mark">&rdquo;</span>
+      </blockquote>
+      <figcaption>Closing narration, The Red Earth</figcaption>
+    </figure>
+    <div class="thesis-body">
+      <p>Guinea sits on roughly a quarter of the world's known bauxite. The ore ships out raw, is refined into aluminum abroad, and the value is captured where the smelters are, not where the earth is. <strong>The film names that trap, walks through its mechanism in seven movements, and ends on the question it leaves behind.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="ladder reveal">
+  <div class="wrap">
+    <h2>What a tonne is worth</h2>
+    <p class="ladder-sub">The trap is arithmetic. The same material climbs in value at every step of refinement, and every step happens somewhere else.</p>
+    <div class="ladder-row">
+      <div class="rung">
+        <span class="label">Bauxite, raw ore</span>
+        <div class="price">$65</div>
+        <div class="per">per tonne</div>
+      </div>
+      <div class="rung">
+        <span class="label">Alumina, refined</span>
+        <div class="price">$350</div>
+        <div class="per">per tonne</div>
+      </div>
+      <div class="rung">
+        <span class="label">Aluminum, smelted</span>
+        <div class="price">$2,400</div>
+        <div class="per">per tonne</div>
+      </div>
+    </div>
+    <div class="ladder-note">
+      <p class="takeaway">From dirt to metal, the price multiplies roughly <em>37 times</em>. Almost none of that climb happens in the country the ore came from.</p>
+      <p class="fineprint">Indicative world prices per tonne, 2025. Orders of magnitude, not market quotes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="film reveal" id="film">
+  <div class="wrap">
+    <h2>Seven movements, three minutes</h2>
+    <p class="film-sub">The narration is the spine. Twenty shots, graded to a 35mm film look, carry it from a soda can in your hand back to the ground it came from.</p>
+    <div class="strip" tabindex="0" aria-label="The seven movements of the film, scroll horizontally">
+      <!-- TODO: each card should carry a real still exported from its clip, 720p frame, aspect 16:9 -->
+      <article class="shot">
+        <div class="tc">0:00</div>
+        <h3>The Hook</h3>
+        <p class="desc">A soda can, then a match-cut to red soil. The metal in your hand starts here.</p>
+        <p class="vo">&ldquo;The can in your hand&hellip; the answer is a trap.&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">0:41</div>
+        <h3>The Trap</h3>
+        <p class="desc">The trap gets its name: the resource curse, the paradox of plenty.</p>
+        <p class="vo">&ldquo;It's called the resource curse. The paradox of plenty&hellip;&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">1:05</div>
+        <h3>The Mechanism</h3>
+        <p class="desc">Hands on ore, excavators, the port. The earth leaves raw, by the shipload.</p>
+        <p class="vo">&ldquo;Here is how the trap closes. The ore is shipped out raw&hellip;&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">1:34</div>
+        <h3>The Refining</h3>
+        <p class="desc">Digesters, molten pour, and the red-mud pond that stays behind.</p>
+        <p class="vo">&ldquo;The money was never in the red earth&hellip;&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">2:04</div>
+        <h3>The Payoff</h3>
+        <p class="desc">Cans, foil, laptops, aircraft, skylines. The metal returns as everything.</p>
+        <p class="vo">&ldquo;The finished metal returns as everything&hellip;&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">2:27</div>
+        <h3>The Cost</h3>
+        <p class="desc">A village at dusk, a child in a lamp-lit doorway, the mine glowing on the horizon.</p>
+        <p class="vo">&ldquo;This is the paradox, in a single frame&hellip; a curse is not a sentence.&rdquo;</p>
+      </article>
+      <article class="shot">
+        <div class="tc">2:54</div>
+        <h3>The Question</h3>
+        <p class="desc">A silver ingot resting on red laterite. The film ends where it began.</p>
+        <p class="vo">&ldquo;The red earth will always be worth more as metal than as dirt&hellip;&rdquo;</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="notes reveal">
+  <div class="wrap">
+    <h2>Production notes</h2>
+    <div class="notes-grid">
+      <div class="note-group">
+        <span class="label">The film</span>
+        <dl>
+          <dt>Runtime</dt><dd>3 minutes 5 seconds</dd>
+          <dt>Format</dt><dd>1280 &times; 720, 16:9, 24 fps, graded to a 35mm film look</dd>
+          <dt>Footage</dt><dd>20 generated shots, text-free, golden-hour, no visible faces</dd>
+        </dl>
+      </div>
+      <div class="note-group">
+        <span class="label">The sound</span>
+        <dl>
+          <dt>Narration</dt><dd>Single narrator, continuous across all seven movements</dd>
+          <dt>Music</dt><dd>Documentary bed with a West African string motif, in sourcing</dd>
+        </dl>
+      </div>
+      <div class="note-group">
+        <span class="label">Status</span>
+        <dl>
+          <dt>Stage</dt><dd>All footage and narration complete; assembly and score pending</dd>
+          <dt>Release</dt><dd>2026</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap credits">
+    <p class="prod">A Green Transformation 2050 production</p>
+    <p class="disclosure">Visuals generated with Seedance 2.0 and narration synthesized with Seed Audio (voice: Sterling), disclosed by design. Written, directed, and edited by people.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var canvas = document.getElementById("strata");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, t = 0, raf = null;
+
+    // laterite core sample: slate sky down through deepening reds
+    var bands = [
+      { c: "#12151a", d: 0.30 },
+      { c: "#1c1613", d: 0.10 },
+      { c: "#33190e", d: 0.11 },
+      { c: "#4b220f", d: 0.12 },
+      { c: "#66290f", d: 0.12 },
+      { c: "#7d3212", d: 0.10 },
+      { c: "#5a2410", d: 0.08 },
+      { c: "#3d1a0c", d: 0.07 }
+    ];
+
+    function size() {
+      var r = canvas.getBoundingClientRect();
+      W = Math.round(r.width * dpr);
+      H = Math.round(r.height * dpr);
+      canvas.width = W;
+      canvas.height = H;
+    }
+
+    function edge(x, base, seed, phase) {
+      // layered sines give each stratum a hand-cut, geological boundary
+      return base +
+        Math.sin(x * 0.0016 + seed * 7 + phase) * H * 0.012 +
+        Math.sin(x * 0.0041 + seed * 13 - phase * 0.6) * H * 0.006 +
+        Math.sin(x * 0.011 + seed * 29) * H * 0.002;
+    }
+
+    function draw(phase) {
+      ctx.clearRect(0, 0, W, H);
+      var y = 0;
+      for (var i = 0; i < bands.length; i++) {
+        var next = y + bands[i].d * H;
+        ctx.fillStyle = bands[i].c;
+        ctx.beginPath();
+        ctx.moveTo(0, i === 0 ? 0 : edge(0, y, i, phase));
+        if (i === 0) {
+          ctx.lineTo(W, 0);
+        } else {
+          for (var x = 0; x <= W; x += 24) ctx.lineTo(x, edge(x, y, i, phase));
+        }
+        for (var x2 = W; x2 >= 0; x2 -= 24) {
+          ctx.lineTo(x2, i === bands.length - 1 ? H : edge(x2, next, i + 1, phase));
+        }
+        ctx.closePath();
+        ctx.fill();
+        y = next;
+      }
+      grain();
+    }
+
+    var grainTile = null;
+    function grain() {
+      if (!grainTile) {
+        var g = document.createElement("canvas");
+        g.width = 160; g.height = 160;
+        var gc = g.getContext("2d");
+        var img = gc.createImageData(160, 160);
+        for (var i = 0; i < img.data.length; i += 4) {
+          var v = 128 + (Math.random() - 0.5) * 255;
+          img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+          img.data[i + 3] = 14;
+        }
+        gc.putImageData(img, 0, 0);
+        grainTile = ctx.createPattern(g, "repeat");
+      }
+      ctx.fillStyle = grainTile;
+      ctx.fillRect(0, 0, W, H);
+    }
+
+    function loop() {
+      t += 0.0035;
+      draw(t);
+      raf = requestAnimationFrame(loop);
+    }
+
+    size();
+    if (reduce) {
+      draw(0);
+    } else {
+      loop();
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+        else if (!raf) loop();
+      });
+    }
+    window.addEventListener("resize", function () { size(); if (reduce) draw(0); });
+  })();
+
+  (function () {
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
